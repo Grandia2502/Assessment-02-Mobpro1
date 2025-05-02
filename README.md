@@ -10,7 +10,7 @@ Membuat aplikasi sederhana menggunakan Jetpack Compose untuk memenuhi tugas Asse
 
 ## Aplikasi CUS (Catatan Uang Sederhana)
 
-### :page_face_up Deskripsi:
+### :page_facing_up: Deskripsi:
 <p>
 Aplikasi Catatan Uang Sederhana merupakan aplikasi android yang membantu pengguna mencatat dan memantau pengeluaran serta pemasukan harian mereka. 
 Cocok untuk pengguna yang ingin mengelola keuangan pribadi dengan mudah.
