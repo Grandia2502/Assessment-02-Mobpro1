@@ -1,0 +1,61 @@
+package com.grandiamuhammad3096.assessment02.database
+
+import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
+import java.time.LocalDate
+
+@Database(
+    entities = [Category::class, Transaction::class],
+    version = 1,
+    exportSchema = false
+)
+
+@TypeConverters(Converters::class)
+abstract class KeuanganDb : RoomDatabase() {
+    abstract fun categoryDao(): CategoryDao
+    abstract fun transactionDao(): TransactionDao
+
+    companion object {
+        // Volatile memastikan perubahan pada INSTANCE langsung terlihat ke semua thread
+        @Volatile
+        private var INSTANCE: KeuanganDb? = null
+
+        /**
+         * Mendapatkan instance AppDatabase tunggal.
+         * synchronized untuk memastikan hanya satu thread yang membuat instance.
+         */
+        fun getInstance(context: Context): KeuanganDb {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    KeuanganDb::class.java,
+                    "keuangan.db"             // nama file database
+                )
+                    .build()
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
+}
+
+class Converters {
+    @TypeConverter
+    fun fromCategoryType(value: CategoryType): String = value.name
+
+    @TypeConverter
+    fun toCategoryType(value: String): CategoryType = CategoryType.valueOf(value)
+
+    @TypeConverter
+    fun fromDate(date: LocalDate): String = date.toString()
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @TypeConverter
+    fun toDate(dateString: String): LocalDate = LocalDate.parse(dateString)
+}
