@@ -8,6 +8,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import androidx.sqlite.db.SupportSQLiteDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 @Database(
@@ -37,6 +41,26 @@ abstract class KeuanganDb : RoomDatabase() {
                     KeuanganDb::class.java,
                     "keuangan.db"             // nama file database
                 )
+                    .addCallback(object : Callback() {
+                        override fun onCreate(db: SupportSQLiteDatabase) {
+                            super.onCreate(db)
+                            // Prepopulate di background thread
+                            CoroutineScope(Dispatchers.IO).launch {
+                                getInstance(context).categoryDao().apply {
+                                    // Expense kategori
+                                    insert(Category(name = "Makanan", type = CategoryType.EXPENSE))
+                                    insert(Category(name = "Transportasi", type = CategoryType.EXPENSE))
+                                    insert(Category(name = "Kesehatan", type = CategoryType.EXPENSE))
+                                    insert(Category(name = "Belanja", type = CategoryType.EXPENSE))
+                                    insert(Category(name = "Hiburan", type = CategoryType.EXPENSE))
+                                    // Income Kategori
+                                    insert(Category(name = "Gaji", type = CategoryType.INCOME))
+                                    insert(Category(name = "Bonus", type = CategoryType.INCOME))
+                                    insert(Category(name = "Hadiah", type = CategoryType.INCOME))
+                                }
+                            }
+                        }
+                    })
                     .build()
                 INSTANCE = instance
                 instance

@@ -1,4 +1,34 @@
 <resources>
     <string name="app_name">CUS</string>
+    <string name="ringkasan_keuangan">Ringkasan Keuangan</string>
+    <string name="saldo">Saldo: </string>
+    <string name="pemasukan_satuan">Pemasukan: </string>
+    <string name="pengeluaran_satuan">Pengeluaran: </string>
+    <string name="rupiah">Rp. %s</string>
+    <string name="tambah_pemasukan">Tambah Pemasukan</string>
+    <string name="tambah_pengeluaran">Tambah Pengeluaran</string>
+    <string name="kelola_kategori">Kelola Kategori</string>
+    <string name="catatan_terbaru">Catatan Terbaru</string>
+    <string name="belum_ada_transaksi">Belum ada Transaksi</string>
+    <string name="tanpa_catatan">Tanpa Catatan</string>
+    <string name="tambah_transaction">Tambah Transaksi</string>
+    <string name="list_kosong">Belum ada catatan uang.</string>
+    <string name="kembali">Kembali</string>
+    <string name="edit_transaction">Edit Transaksi</string>
+    <string name="hapus">Hapus</string>
+    <string name="batal">Batal</string>
+    <string name="jumlah">Jumlah</string>
+    <string name="catatan">Catatan</string>
+    <string name="simpan">Simpan</string>
+    <string name="konfirmasi_hapus">Konfirmasi Hapus</string>
+    <string name="pesan_hapus">Apakah Anda yakin ingin menghapus transaksi ini?</string>
+    <string name="pengeluaran">Pengeluaran</string>
+    <string name="pemasukan">Pemasukan</string>
+    <string name="tanggal">Tanggal</string>
+    <string name="pilih_tanggal">Pilih Tanggal</string>
+    <string name="pilih_kategori">Pilih Kategori</string>
+    <string name="kategori">Kategori</string>
+    <string name="ok">OK</string>
+    <string name="invalid">Jumlah, Catatan dan Kategori Wajib diisi!</string>
 
 </resources>
