@@ -189,11 +189,12 @@ fun ScreenContent(
                             ) {
                                 Text(text = if (tx.type == CategoryType.EXPENSE)
                                     stringResource(R.string.pengeluaran) else stringResource(R.string.pemasukan),
-                                    modifier = Modifier.weight(2.5f)
+                                    modifier = Modifier.weight(2.7f), maxLines = 1
                                 )
                                 Text(text = tx.note ?: stringResource(R.string.tanpa_catatan),
                                     modifier = Modifier.weight(2.5f).padding(start = 16.dp),
-                                    maxLines = 1)
+                                    maxLines = 1
+                                )
                                 Spacer(modifier = Modifier.weight(1f))
                                 Text(text = "Rp. ",
                                     style = MaterialTheme.typography.bodyMedium)
