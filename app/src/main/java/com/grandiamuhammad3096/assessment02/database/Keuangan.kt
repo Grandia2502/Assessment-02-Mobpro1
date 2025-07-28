@@ -19,7 +19,6 @@ import java.time.LocalDate
     ],
     indices = [Index("categoryId")]
 )
-
 data class Transaction(
     @PrimaryKey(autoGenerate = true) val id: Long = 0L,
     val amount: Double,

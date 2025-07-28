@@ -9,6 +9,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.grandiamuhammad3096.assessment02.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,15 +49,15 @@ abstract class KeuanganDb : RoomDatabase() {
                             CoroutineScope(Dispatchers.IO).launch {
                                 getInstance(context).categoryDao().apply {
                                     // Expense kategori
-                                    insert(Category(name = "Makanan", type = CategoryType.EXPENSE))
-                                    insert(Category(name = "Transportasi", type = CategoryType.EXPENSE))
-                                    insert(Category(name = "Kesehatan", type = CategoryType.EXPENSE))
-                                    insert(Category(name = "Belanja", type = CategoryType.EXPENSE))
-                                    insert(Category(name = "Hiburan", type = CategoryType.EXPENSE))
+                                    insert(Category(name = context.getString(R.string.kategori_makanan), type = CategoryType.EXPENSE))
+                                    insert(Category(name = context.getString(R.string.kategori_transportasi), type = CategoryType.EXPENSE))
+                                    insert(Category(name = context.getString(R.string.kategori_kesehatan), type = CategoryType.EXPENSE))
+                                    insert(Category(name = context.getString(R.string.kategori_belanja), type = CategoryType.EXPENSE))
+                                    insert(Category(name = context.getString(R.string.kategori_hiburan), type = CategoryType.EXPENSE))
                                     // Income Kategori
-                                    insert(Category(name = "Gaji", type = CategoryType.INCOME))
-                                    insert(Category(name = "Bonus", type = CategoryType.INCOME))
-                                    insert(Category(name = "Hadiah", type = CategoryType.INCOME))
+                                    insert(Category(name = context.getString(R.string.kategori_gaji), type = CategoryType.INCOME))
+                                    insert(Category(name = context.getString(R.string.kategori_bonus), type = CategoryType.INCOME))
+                                    insert(Category(name = context.getString(R.string.kategori_hadiah), type = CategoryType.INCOME))
                                 }
                             }
                         }

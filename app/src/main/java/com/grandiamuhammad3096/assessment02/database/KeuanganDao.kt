@@ -13,7 +13,7 @@ interface TransactionDao {
     suspend fun insert(transaction: Transaction)
 
     @Query("SELECT * FROM `Transaction` ORDER BY date DESC")
-    fun getAll(): Flow<List<Transaction>>
+    fun getAllTransactions(): Flow<List<Transaction>>
 
     @Query("SELECT * FROM `Transaction` WHERE type = :type ORDER BY date DESC")
     fun getByType(type: CategoryType): Flow<List<Transaction>>
@@ -29,6 +29,9 @@ interface TransactionDao {
 interface CategoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(category: Category)
+
+    @Query("SELECT * FROM Category ORDER BY name ASC")
+    fun getAllCategories(): Flow<List<Category>>
 
     @Query("SELECT * FROM Category WHERE type = :type ORDER BY name ASC")
     fun getByType(type: CategoryType): Flow<List<Category>>

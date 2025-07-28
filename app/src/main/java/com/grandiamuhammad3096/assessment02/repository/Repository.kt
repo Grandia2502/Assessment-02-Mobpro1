@@ -16,6 +16,7 @@ interface FinancialRepository {
     suspend fun insertCategory(category: Category)
     suspend fun deleteCategory(category: Category)
     fun getCategoriesByType(type: CategoryType): Flow<List<Category>>
+    fun getAllCategories(): Flow<List<Category>>
 
     // Transaction operations
     suspend fun insertTransaction(transaction: Transaction)
@@ -44,6 +45,9 @@ class FinancialRepositoryImpl(
     override fun getCategoriesByType(type: CategoryType): Flow<List<Category>> =
         categoryDao.getByType(type)
 
+    override fun getAllCategories(): Flow<List<Category>> =
+        categoryDao.getAllCategories()
+
     // Transaction implementations
     override suspend fun insertTransaction(transaction: Transaction) =
         transactionDao.insert(transaction)
@@ -52,7 +56,7 @@ class FinancialRepositoryImpl(
         transactionDao.delete(transaction)
 
     override fun getAllTransactions(): Flow<List<Transaction>> =
-        transactionDao.getAll()
+        transactionDao.getAllTransactions()
 
     override fun getTransactionsByType(type: CategoryType): Flow<List<Transaction>> =
         transactionDao.getByType(type)

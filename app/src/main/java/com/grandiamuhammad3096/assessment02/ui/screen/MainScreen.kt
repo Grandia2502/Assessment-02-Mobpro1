@@ -38,12 +38,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.grandiamuhammad3096.assessment02.R
+import com.grandiamuhammad3096.assessment02.database.Category
 import com.grandiamuhammad3096.assessment02.database.CategoryType
 import com.grandiamuhammad3096.assessment02.database.Transaction
 import com.grandiamuhammad3096.assessment02.navigasi.Screens
@@ -63,9 +65,9 @@ fun MainScreen(navController: NavController, themeViewModel: ThemeViewModel) {
     val vm: MainViewModel = viewModel(
         factory = MainViewModelFactory(repo)
     )
-
     val income by vm.totalIncome.collectAsState()
     val expense by vm.totalExpense.collectAsState()
+    val categories by vm.categories.collectAsState()
     val transactions by vm.recentTransactions.collectAsState(initial = emptyList())
 
     Scaffold(
@@ -108,6 +110,7 @@ fun MainScreen(navController: NavController, themeViewModel: ThemeViewModel) {
             Modifier.padding(innerPadding),
             income = income?.toInt() ?: 0,
             expense = expense?.toInt() ?: 0,
+            categories = categories,
             transactions = transactions,
             onTransactionClick = { id ->
                 navController.navigate(Screens.TransactionEdit.routeWithId(id))
@@ -121,10 +124,12 @@ fun ScreenContent(
     modifier: Modifier = Modifier,
     income: Int,
     expense: Int,
+    categories: List<Category>,
     transactions: List<Transaction>,
     onTransactionClick: (Long) -> Unit
 ) {
     val balance = income - expense
+    val categoryMap = categories.associateBy { it.id }
 
     Column(
         modifier = modifier
@@ -134,7 +139,6 @@ fun ScreenContent(
     ) {
         Text(text = stringResource(R.string.ringkasan_keuangan),
             style = MaterialTheme.typography.titleLarge)
-
         Card(
             modifier = Modifier.fillMaxWidth(),
             elevation = CardDefaults.cardElevation(),
@@ -157,10 +161,9 @@ fun ScreenContent(
                 }
             }
         }
-
         Text(text = stringResource(R.string.catatan_terbaru),
             style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(top = 16.dp))
+            modifier = Modifier.padding(top = 8.dp))
 
         if (transactions.isEmpty()) {
             Column (
@@ -176,13 +179,26 @@ fun ScreenContent(
                 contentPadding = PaddingValues(bottom = 84.dp)
             ) {
                 items(transactions) { tx ->
+                    val categoryName = categoryMap[tx.category]?.name ?: "Unknown"
                     ListItem(
                         headlineContent = {
-                            Text(
-                                text = "${tx.date}",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontWeight = FontWeight.Bold
-                        )},
+                            Row(modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "${tx.date}",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Spacer(modifier = Modifier.weight(1f))
+                                Text(
+                                    text = categoryName,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Light,
+                                    textAlign = TextAlign.End
+                                )
+                            }
+                        },
                         supportingContent = {
                             Row(modifier = Modifier.fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically
@@ -234,9 +250,9 @@ fun MainScreenContentPreview(navController: NavController) {
     val vm: MainViewModel = viewModel(
         factory = MainViewModelFactory(repo)
     )
-
     val income by vm.totalIncome.collectAsState()
     val expense by vm.totalExpense.collectAsState()
+    val categories by vm.categories.collectAsState()
     val transactions by vm.recentTransactions.collectAsState(initial = emptyList())
 
     Scaffold(
@@ -265,7 +281,7 @@ fun MainScreenContentPreview(navController: NavController) {
                 onClick = {
                     navController.navigate(Screens.Transaction.route)
                 },
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(8.dp),
                 shape = CircleShape
             ) {
                 Icon(
@@ -279,6 +295,7 @@ fun MainScreenContentPreview(navController: NavController) {
             Modifier.padding(innerPadding),
             income = income?.toInt() ?: 0,
             expense = expense?.toInt() ?: 0,
+            categories = categories,
             transactions = transactions,
             onTransactionClick = { id ->
                 navController.navigate(Screens.TransactionEdit.routeWithId(id))

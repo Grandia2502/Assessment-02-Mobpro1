@@ -36,13 +36,15 @@ class MainViewModel(
             initialValue = 0.0
         )
 
-    // Recent 5 transactions
+    // Transactions
     val recentTransactions: StateFlow<List<Transaction>> = repository
         .getAllTransactions()
-        .map { list -> list.sortedByDescending { it.date }.take(5) }
+        .map { list -> list.sortedByDescending { it.date } }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
         )
+
+    val categories = repository.getAllCategories().stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 }

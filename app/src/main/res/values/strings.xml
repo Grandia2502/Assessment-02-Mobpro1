@@ -30,5 +30,13 @@
     <string name="kategori">Kategori</string>
     <string name="ok">OK</string>
     <string name="invalid">Jumlah, Catatan dan Kategori Wajib diisi!</string>
+    <string name="kategori_makanan">Makanan</string>
+    <string name="kategori_transportasi">Transportasi</string>
+    <string name="kategori_kesehatan">Kesehatan</string>
+    <string name="kategori_belanja">Belanja</string>
+    <string name="kategori_hiburan">Hiburan</string>
+    <string name="kategori_gaji">Gaji</string>
+    <string name="kategori_bonus">Bonus</string>
+    <string name="kategori_hadiah">Hadiah</string>
 
 </resources>
